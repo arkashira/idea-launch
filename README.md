@@ -1,12 +1,15 @@
-# Stripe Integration
-This project provides a basic implementation of Stripe integration for payment processing.
+# Payment Gateway
+A simple payment gateway implementation in Python.
 
 ## Features
-* One-click checkout and subscription plans
-* Payment status stored in the backend and exposed via API
-* Failed payments trigger a retry workflow
+* Process payments
+* Get payment status
+* Retry failed payments
+* Expose payment status via API
 
 ## Usage
-1. Install the project using `poetry install`
-2. Run the project using `python src/stripe_integration.py --api-key <api_key> --user-id <user_id> --amount <amount>`
-3. Test the project using `pytest tests/test_stripe_integration.py`
+1. Create a `Payment` object with the desired amount, currency, and payment method.
+2. Create a `PaymentGateway` object and process the payment using the `process_payment` method.
+3. Get the payment status using the `get_payment_status` method.
+4. Retry a failed payment using the `retry_payment` method.
+5. Expose the payment status via API using the `expose_payment_status_via_api` method.
