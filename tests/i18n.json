@@ -1,0 +1,14 @@
+{
+    "idea_capture": {
+        "description": "Idea Capture",
+        "tooltip": "Example idea capture tooltip"
+    },
+    "spec_review": {
+        "description": "Spec Review",
+        "tooltip": "Example spec review tooltip"
+    },
+    "launch": {
+        "description": "Launch",
+        "tooltip": "Example launch tooltip"
+    }
+}
