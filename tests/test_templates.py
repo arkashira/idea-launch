@@ -1,30 +1,38 @@
-from templates import Template, TemplateCatalog, UIBuilder, BackendGenerator, create_template
+import pytest
+from src.templates import Template, TemplateCatalog, UIBuilder, BackendGenerator, create_template_catalog, select_template, auto_populate_ui_builder, auto_populate_backend_generator
 
-def test_template_creation():
-    template = create_template('MVP', 'landing_page.html', 'user_auth.py', 'data_model.json')
-    assert template.name == 'MVP'
-    assert template.landing_page == 'landing_page.html'
-    assert template.user_auth == 'user_auth.py'
-    assert template.data_model == 'data_model.json'
+def test_create_template_catalog():
+    catalog = create_template_catalog()
+    assert len(catalog.get_templates()) == 2
 
-def test_template_catalog():
-    catalog = TemplateCatalog()
-    template = create_template('MVP', 'landing_page.html', 'user_auth.py', 'data_model.json')
-    catalog.add_template(template)
-    assert catalog.get_template('MVP') == template
+def test_select_template():
+    catalog = create_template_catalog()
+    template = select_template(catalog, "MVP1")
+    assert template.name == "MVP1"
 
-def test_ui_builder():
-    builder = UIBuilder()
-    template = create_template('MVP', 'landing_page.html', 'user_auth.py', 'data_model.json')
-    builder.auto_populate(template)
-    assert builder.ui['landing_page'] == 'landing_page.html'
-    assert builder.ui['user_auth'] == 'user_auth.py'
-    assert builder.ui['data_model'] == 'data_model.json'
+def test_auto_populate_ui_builder():
+    ui_builder = UIBuilder()
+    catalog = create_template_catalog()
+    template = select_template(catalog, "MVP1")
+    auto_populate_ui_builder(ui_builder, template)
+    assert ui_builder.get_ui() == {
+        "landing_page": "landing_page1",
+        "user_auth": "user_auth1",
+        "data_model": "data_model1"
+    }
 
-def test_backend_generator():
-    generator = BackendGenerator()
-    template = create_template('MVP', 'landing_page.html', 'user_auth.py', 'data_model.json')
-    generator.auto_populate(template)
-    assert generator.backend['landing_page'] == 'landing_page.html'
-    assert generator.backend['user_auth'] == 'user_auth.py'
-    assert generator.backend['data_model'] == 'data_model.json'
+def test_auto_populate_backend_generator():
+    backend_generator = BackendGenerator()
+    catalog = create_template_catalog()
+    template = select_template(catalog, "MVP1")
+    auto_populate_backend_generator(backend_generator, template)
+    assert backend_generator.get_backend() == {
+        "landing_page": "landing_page1",
+        "user_auth": "user_auth1",
+        "data_model": "data_model1"
+    }
+
+def test_get_template_not_found():
+    catalog = create_template_catalog()
+    with pytest.raises(ValueError):
+        select_template(catalog, "MVP3")
