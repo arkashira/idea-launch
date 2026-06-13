@@ -1,38 +1,41 @@
 import pytest
-from src.templates import Template, TemplateCatalog, UIBuilder, BackendGenerator, create_template_catalog, select_template, auto_populate_ui_builder, auto_populate_backend_generator
+from src.templates import Template, TemplateCatalog, UIBuilder, BackendGenerator
 
-def test_create_template_catalog():
-    catalog = create_template_catalog()
-    assert len(catalog.get_templates()) == 2
+def test_template_creation():
+    template = Template("MVP", "Minimal Viable Product", "index.html", True, {"name": "str", "age": "int"})
+    assert template.name == "MVP"
+    assert template.description == "Minimal Viable Product"
+    assert template.landing_page == "index.html"
+    assert template.user_auth == True
+    assert template.data_model == {"name": "str", "age": "int"}
 
-def test_select_template():
-    catalog = create_template_catalog()
-    template = select_template(catalog, "MVP1")
-    assert template.name == "MVP1"
+def test_template_catalog():
+    catalog = TemplateCatalog()
+    template = Template("MVP", "Minimal Viable Product", "index.html", True, {"name": "str", "age": "int"})
+    catalog.add_template(template)
+    assert len(catalog.get_templates()) == 1
+    assert catalog.get_template("MVP").name == "MVP"
 
-def test_auto_populate_ui_builder():
-    ui_builder = UIBuilder()
-    catalog = create_template_catalog()
-    template = select_template(catalog, "MVP1")
-    auto_populate_ui_builder(ui_builder, template)
-    assert ui_builder.get_ui() == {
-        "landing_page": "landing_page1",
-        "user_auth": "user_auth1",
-        "data_model": "data_model1"
+def test_ui_builder():
+    builder = UIBuilder()
+    template = Template("MVP", "Minimal Viable Product", "index.html", True, {"name": "str", "age": "int"})
+    builder.select_template(template)
+    assert builder.auto_populate() == {
+        "landing_page": "index.html",
+        "user_auth": True,
+        "data_model": {"name": "str", "age": "int"}
     }
 
-def test_auto_populate_backend_generator():
-    backend_generator = BackendGenerator()
-    catalog = create_template_catalog()
-    template = select_template(catalog, "MVP1")
-    auto_populate_backend_generator(backend_generator, template)
-    assert backend_generator.get_backend() == {
-        "landing_page": "landing_page1",
-        "user_auth": "user_auth1",
-        "data_model": "data_model1"
+def test_backend_generator():
+    generator = BackendGenerator()
+    template = Template("MVP", "Minimal Viable Product", "index.html", True, {"name": "str", "age": "int"})
+    generator.select_template(template)
+    assert generator.auto_populate() == {
+        "landing_page": "index.html",
+        "user_auth": True,
+        "data_model": {"name": "str", "age": "int"}
     }
 
-def test_get_template_not_found():
-    catalog = create_template_catalog()
-    with pytest.raises(ValueError):
-        select_template(catalog, "MVP3")
+def test_template_catalog_edge_case():
+    catalog = TemplateCatalog()
+    assert catalog.get_template("Non-existent") is None
