@@ -1,4 +1,5 @@
-# Idea Launch
-A simple command-line tool for submitting ideas.
+# Billing System
+A simple billing system that tracks active users, request volume, and estimated monthly cost.
 
 ## Usage
+Run the billing system with the following command:
