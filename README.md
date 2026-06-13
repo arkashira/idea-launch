@@ -1,5 +1,4 @@
-# Templates
-A Python project for creating and managing templates.
+# Idea Launch
+A simple command-line tool for submitting ideas.
 
-## Installation
-To install the project, run the following command:
+## Usage
