@@ -1,11 +1,8 @@
-# Deploy Script
-This script deploys the generated code to a public URL.
+# Analytics
+A simple analytics dashboard with WebSocket data updates and CSV export.
 
 ## Usage
-To use this script, simply run `python deploy.py` with the required command-line arguments:
-* `--repo_url`: GitHub repository URL
-* `--render_url`: Render URL
-* `--heroku_url`: Heroku URL
-* `--code`: Generated code
-
-## Example
+1. Create a `UserEngagement` object with active users, session duration, and conversion funnels.
+2. Create a `WebSocket` object and send the `UserEngagement` data using `send_data`.
+3. Get the updated data using `get_data`.
+4. Export the data to CSV using `export_to_csv`.
