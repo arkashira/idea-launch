@@ -1,11 +1,11 @@
-# Billing System
-A simple billing system that tracks usage and estimates monthly costs.
-
-## Features
-* Tracks active users and API calls
-* Estimates monthly costs based on API calls
-* Warns when projected cost exceeds $50
-* Integrates with Stripe for automatic monthly invoicing
+# Deploy Script
+This script deploys the generated code to a public URL.
 
 ## Usage
-Run the billing system with the following command:
+To use this script, simply run `python deploy.py` with the required command-line arguments:
+* `--repo_url`: GitHub repository URL
+* `--render_url`: Render URL
+* `--heroku_url`: Heroku URL
+* `--code`: Generated code
+
+## Example
